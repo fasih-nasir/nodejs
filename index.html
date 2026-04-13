@@ -1,3 +1,5 @@
+<!-- ================== NODE-JS INSTALL CODE START ===================== -->
+
 npm init
 npm install express
 npm install dotenv
@@ -11,3 +13,26 @@ npm install nodemon
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
+
+<!-- ================== NODE-JS INSTALL CODE END ===================== -->
+
+
+<!-- ================== NODE-JS BOILER PLATE CODE START ===================== -->
+
+// Import Express framework
+const express = require("express");
+
+// Create an Express application (server instance)
+const app = express();
+
+// Set PORT (use .env value if available, otherwise default to 3000)
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+
+// Start the server and listen on the defined PORT
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+<!-- ================== NODE-JS BOILER PLATE CODE END ===================== -->
