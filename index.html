@@ -7,6 +7,7 @@ npm install mongoose
 npm install jsonwebtoken
 npm install bcrypt
 npm install nodemon
+npm install firebase-admin
 
 
 "scripts": {
@@ -36,3 +37,59 @@ app.listen(PORT, () => {
 });
 
 <!-- ================== NODE-JS BOILER PLATE CODE END ===================== -->
+
+
+
+
+
+
+
+<!-- ================ NODE JS FIREBASE CONFIG CODE START ===================  -->
+
+
+// Import Express framework
+const express = require("express");
+
+
+
+const { db, collection, getDocs } = require("./config/firebase");
+
+// Create an Express application (server instance)
+const app = express();
+
+// Set PORT (use .env value if available, otherwise default to 3000)
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.get("/api/contact", async (req, res) => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "contact"));
+
+    let users = [];
+
+    querySnapshot.forEach((doc) => {
+      users.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+
+    res.json({
+      success: true,
+      data: users,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+// Start the server and listen on the defined PORT
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+<!-- ================ NODE JS FIREBASE CONFIG CODE END =====================  -->
