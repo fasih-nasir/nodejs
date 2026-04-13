@@ -47,18 +47,18 @@ app.listen(PORT, () => {
 <!-- ================ NODE JS FIREBASE CONFIG CODE START ===================  -->
 
 
-// Import Express framework
 const express = require("express");
-
-
+const cors = require("cors");
 
 const { db, collection, getDocs } = require("./config/firebase");
 
-// Create an Express application (server instance)
 const app = express();
-
-// Set PORT (use .env value if available, otherwise default to 3000)
 const PORT = process.env.PORT || 3000;
+
+// ✅ ADD THIS (IMPORTANT)
+app.use(cors({
+  origin: "http://127.0.0.1:5500"
+}));
 
 app.use(express.json());
 
@@ -88,7 +88,6 @@ app.get("/api/contact", async (req, res) => {
   }
 });
 
-// Start the server and listen on the defined PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
